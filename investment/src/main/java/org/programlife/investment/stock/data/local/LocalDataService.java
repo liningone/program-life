@@ -2,8 +2,7 @@ package org.programlife.investment.stock.data.local;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.junit.Assert;
-import org.programlife.investment.stock.data.DateUtils;
+import org.programlife.investment.stock.util.DateUtils;
 import org.programlife.investment.stock.data.KLineData;
 import org.programlife.investment.stock.data.KLineDataUtils;
 import org.programlife.investment.stock.data.StockDataService;

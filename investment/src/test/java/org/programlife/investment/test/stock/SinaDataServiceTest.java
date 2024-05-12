@@ -2,12 +2,10 @@ package org.programlife.investment.test.stock;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.programlife.investment.stock.data.DateUtils;
+import org.programlife.investment.stock.util.DateUtils;
 import org.programlife.investment.stock.data.KLineData;
 import org.programlife.investment.stock.data.internet.sina.SinaDataService;
-import org.programlife.investment.stock.data.local.LocalDataService;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 public class SinaDataServiceTest {

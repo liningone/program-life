@@ -48,3 +48,13 @@ investment.stock.tradingsimulator       交易模拟器（历史数据）
 股票ID
 沪深300    399300.SZ or 000300.SS or 000300.SHH 
 上证指数   000001.SS or 000001.SHH or 000001.SH
+
+
+股票专业术语股票术语
+面值 - Face value
+账面损益 - Paper Loss/Profit
+总成本 - Total Cost
+持有金额 - Holding Amount
+持有收益 - Holding Profit/Loss
+持有收益率 - Holding Yield / Holding Return Rate
+持仓成本价 - Average Purchase Price / Cost Basis

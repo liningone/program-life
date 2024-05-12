@@ -1,4 +1,4 @@
-package org.programlife.investment.stock.data;
+package org.programlife.investment.stock.util;
 
 import java.sql.Timestamp;
 import java.text.ParseException;

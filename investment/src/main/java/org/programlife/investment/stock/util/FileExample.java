@@ -1,4 +1,4 @@
-package org.programlife.investment.stock.data.local;
+package org.programlife.investment.stock.util;
 
 import org.apache.commons.io.FileUtils;
 

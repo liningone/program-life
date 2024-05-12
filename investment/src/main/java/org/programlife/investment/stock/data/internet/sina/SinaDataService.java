@@ -5,12 +5,10 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.programlife.investment.stock.data.DateUtils;
+import org.programlife.investment.stock.util.DateUtils;
 import org.programlife.investment.stock.data.KLineData;
 import org.programlife.investment.stock.data.StockDataService;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 /*
