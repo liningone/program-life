@@ -1,7 +1,5 @@
 package org.programlife.investment.stock.data;
 
-import org.programlife.investment.stock.util.DateUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +37,20 @@ public class KLineDataUtils {
             }
         }
         return left;
+    }
+
+    public static List<KLineData> filter(List<KLineData> list, List<String> dates) {
+        List<KLineData> res = new ArrayList();
+        int idx = 0;
+        for (KLineData data : list) {
+            String time = dates.get(idx).substring(0, list.get(0).getTime().length());
+            if (!time.equals(data.getTime())) {
+                continue;
+            }
+            idx ++;
+            res.add(data);
+        }
+        return res;
     }
 }
 

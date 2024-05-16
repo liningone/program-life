@@ -75,6 +75,17 @@ public class LocalDataService implements StockDataService {
          */
     }
 
+    public List<KLineData> queryKLineData(String stockSymbol, int scale, int ma, List<String> specifiedTimes) {
+        String startTime = specifiedTimes.get(0);
+        String endTime = specifiedTimes.get(specifiedTimes.size() - 1);
+        List<KLineData> res = queryKLineData(stockSymbol, scale, ma, startTime, endTime);
+        res = KLineDataUtils.filter(res, specifiedTimes);
+        if (res.size() != specifiedTimes.size()) {
+            throw new RuntimeException("queryKLineData error");
+        }
+        return res;
+    }
+
     public void saveData(String stockSymbol, String year, String type, List<KLineData> list) {
         Collections.sort(list, new Comparator<KLineData>() {
             @Override

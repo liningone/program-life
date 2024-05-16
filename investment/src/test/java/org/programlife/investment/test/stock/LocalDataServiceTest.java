@@ -6,6 +6,7 @@ import org.programlife.investment.stock.util.DateUtils;
 import org.programlife.investment.stock.data.KLineData;
 import org.programlife.investment.stock.data.local.LocalDataService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LocalDataServiceTest {
@@ -45,4 +46,22 @@ public class LocalDataServiceTest {
         Assert.assertEquals(3217, data.getClose());
     }
 
+    @Test
+    public void testQueryPriceForSpecifiedTime() {
+        List<String> dates = new ArrayList<>();
+        dates.add(DateUtils.completeTime("2023-05-12"));
+        dates.add(DateUtils.completeTime("2023-06-12"));
+        dates.add(DateUtils.completeTime("2023-07-14"));
+
+        List<KLineData> res = dataService.queryKLineData("000300.SH", 240, 0, dates);
+        Assert.assertEquals(3, res.size());
+
+        KLineData data = res.get(0);
+        Assert.assertEquals("2023-05-12", data.getTime());
+        Assert.assertEquals(3937, data.getClose());
+
+        data = res.get(2);
+        Assert.assertEquals("2023-07-14", data.getTime());
+        Assert.assertEquals(3899, data.getClose());
+    }
 }

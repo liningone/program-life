@@ -57,7 +57,7 @@ public class DateUtils {
     }
 
     //2023-05-12 -> 2023-05-12 00:00:00
-    public static String completeDate(String date) {
+    public static String completeTime(String date) {
         if (date.length() == 10){
             return date + " 00:00:00";
         }
