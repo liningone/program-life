@@ -25,7 +25,7 @@ public class AlphaVantageDataService implements StockDataService {
     private static final String BASE_URL = "https://www.alphavantage.co/query";
 
     @Override
-    public List<KLineData> queryKLineData(String stockSymbol, int scale, int ma, long startTimeMills, long endTimeMills) {
+    public List<KLineData> queryKLineData(String stockSymbol, int scale, int ma, String startTime, String endTime) {
         String function = "TIME_SERIES_DAILY";
         String outputsize = "full";  // 'full' 或 'compact', full会返回所有历史数据，compact返回最近100条数据
         String url = String.format("%s?function=%s&symbol=%s&outputsize=%s&apikey=%s",

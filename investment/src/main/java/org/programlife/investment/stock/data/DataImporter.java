@@ -10,10 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class DataImporter {
     private LocalDataService localDataService = new LocalDataService();
@@ -22,7 +19,7 @@ public class DataImporter {
     private SinaDataService sinaDataService = new SinaDataService();
 
     public void alphaVantageToLocal(String stockSymbol, String type) {
-        List<KLineData> list = alphaVantageDataService.queryKLineData(stockSymbol, 240, 0, System.currentTimeMillis(), System.currentTimeMillis());
+        List<KLineData> list = alphaVantageDataService.queryKLineData(stockSymbol, 240, 0, DateUtils.getCurrentTime(), DateUtils.getCurrentTime());
         Map<String, List<KLineData>> map = new HashMap<>();
         for (KLineData data : list) {
             String year = data.getTime().substring(0, 4);
@@ -37,9 +34,9 @@ public class DataImporter {
     }
 
     public void sinaToLocal(String stockSymbol, String type) {
-        long starTimeMills = DateUtils.parseMills("2020-01-01 00:00:00");
+        String starTime = "2020-01-01 00:00:00";
         List<KLineData> list = sinaDataService.queryKLineData(stockSymbol, 240, -1,
-                starTimeMills, System.currentTimeMillis());
+                starTime, DateUtils.getCurrentTime());
         Map<String, List<KLineData>> map = new HashMap<>();
         for (KLineData data : list) {
             String year = data.getTime().substring(0, 4);

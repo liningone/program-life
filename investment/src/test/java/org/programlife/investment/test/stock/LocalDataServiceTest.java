@@ -13,10 +13,10 @@ public class LocalDataServiceTest {
 
     @Test
     public void testQueryClosingPrice() {
-        long startTimeMills = DateUtils.parseMills("2023-01-01 00:00:00");
-        long endTimeMills = DateUtils.parseMills("2023-12-30 00:00:00");
+        String startTime = "2023-01-01 00:00:00";
+        String endTime = "2023-12-30 00:00:00";
 
-        List<KLineData> res = dataService.queryKLineData("000300.SH", 240, 0, startTimeMills, endTimeMills);
+        List<KLineData> res = dataService.queryKLineData("000300.SH", 240, 0, startTime, endTime);
         Assert.assertEquals(242, res.size());
         KLineData data = res.get(0);
         Assert.assertEquals("2023-01-03", data.getTime());
@@ -25,17 +25,17 @@ public class LocalDataServiceTest {
         Assert.assertEquals("2023-12-29", data.getTime());
         Assert.assertEquals(3431, data.getClose());
 
-        startTimeMills = DateUtils.parseMills("2022-01-01 00:00:00");
-        endTimeMills = DateUtils.parseMills("2023-12-30 00:00:00");
-        res = dataService.queryKLineData("000300.SH", 240, 0, startTimeMills, endTimeMills);
+        startTime = "2022-01-01 00:00:00";
+        endTime = "2023-12-30 00:00:00";
+        res = dataService.queryKLineData("000300.SH", 240, 0, startTime, endTime);
         Assert.assertEquals(484, res.size());
         data = res.get(0);
         Assert.assertEquals("2022-01-04", data.getTime());
         Assert.assertEquals(4917, data.getClose());
 
-        startTimeMills = DateUtils.parseMills("2023-02-02 00:00:00");
-        endTimeMills = DateUtils.parseMills("2024-02-01 00:00:00");
-        res = dataService.queryKLineData("000300.SH", 240, 0, startTimeMills, endTimeMills);
+        startTime = "2023-02-02 00:00:00";
+        endTime = "2024-02-01 00:00:00";
+        res = dataService.queryKLineData("000300.SH", 240, 0, startTime, endTime);
         Assert.assertEquals(248, res.size());
         data = res.get(0);
         Assert.assertEquals("2023-02-02", data.getTime());

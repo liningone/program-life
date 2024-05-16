@@ -129,8 +129,8 @@ public class InvestmentCalculatorV1 implements InvestmentCalculator{
         LocalDataService dataService = new LocalDataService();
         InvestmentCalculatorV1 calculatorV1 = new InvestmentCalculatorV1();
 
-        long startTimeMills = DateUtils.parseMills("2023-05-12");
-        long endTimeMills = DateUtils.parseMills("2024-05-10");
+        String startTimeMills = "2023-05-12";
+        String endTimeMills = "2024-05-10";
 
         String dates = "" +
                 "2024-04-12\t1,000.00\t3475.84\t12,000.00\t11,486.78\t-7.85%\t-4.28%\n" +
@@ -176,8 +176,8 @@ public class InvestmentCalculatorV1 implements InvestmentCalculator{
         LocalDataService dataService = new LocalDataService();
         InvestmentCalculatorV1 calculatorV1 = new InvestmentCalculatorV1();
 
-        long startTimeMills = DateUtils.parseMills("2023-05-12");
-        long endTimeMills = DateUtils.parseMills("2024-05-10");
+        String startTime = "2023-05-12 00:00:00";
+        String endTime = "2024-05-10 00:00:00";
 
         String dates = "" +
                 "2024-04-12" +
@@ -192,7 +192,7 @@ public class InvestmentCalculatorV1 implements InvestmentCalculator{
                 "2023-07-12" +
                 "2023-06-12" +
                 "2023-05-12";
-        List<KLineData> datas = dataService.queryKLineData("000300.SH", 240, 0, startTimeMills, endTimeMills);
+        List<KLineData> datas = dataService.queryKLineData("000300.SH", 240, 0, startTime, endTime);
 
         List<Operation> operationList = new ArrayList<>();
         for (int i = 0; i < datas.size(); i += 1) {

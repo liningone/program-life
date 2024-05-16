@@ -7,16 +7,23 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class DateUtils {
-    public static long parseMills(String data) {
-        if (data.length() == 10){
-            data = data + " 00:00:00";
+    public static long parseMills(String date) {
+        if (date.length() == 10){
+            date = date + " 00:00:00";
         }
-        Timestamp ts = Timestamp.valueOf(data);
+        Timestamp ts = Timestamp.valueOf(date);
         return ts.getTime();
     }
 
     public static int getYear(long timeMills) {
         Date date = new Date(timeMills);
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        return c.get(Calendar.YEAR);
+    }
+
+    public static int getYear(String dateStr) {
+        Date date = parseDate(dateStr);
         Calendar c = Calendar.getInstance();
         c.setTime(date);
         return c.get(Calendar.YEAR);
@@ -28,16 +35,33 @@ public class DateUtils {
         return simpleDateFormat.format(date);
     }
 
-    public static Date parseDate(String time) {
-        //time = "2020-02-13 16:01:30";
+    public static String parseDateStr(Date date) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return simpleDateFormat.format(date);
+    }
+
+    public static Date parseDate(String dateStr) {
+        //dateStr likes: "2020-02-13 16:01:30";
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = null;
         try {
-            date = sdf.parse(time);
+            date = sdf.parse(dateStr);
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
         return date;
+    }
+
+    public static String getCurrentTime() {
+        return parseDateStr(new Date());
+    }
+
+    //2023-05-12 -> 2023-05-12 00:00:00
+    public static String completeDate(String date) {
+        if (date.length() == 10){
+            return date + " 00:00:00";
+        }
+        return null;
     }
 
     public static void main(String[] args) {

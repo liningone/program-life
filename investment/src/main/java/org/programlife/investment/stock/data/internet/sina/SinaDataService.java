@@ -30,7 +30,7 @@ public class SinaDataService implements StockDataService {
     private static final String BASE_URL = "https://money.finance.sina.com.cn/quotes_service/api/json_v2.php/CN_MarketData.getKLineData";
 
     @Override
-    public List<KLineData> queryKLineData(String stockSymbol, int scale, int ma, long startTimeMills, long endTimeMills) {
+    public List<KLineData> queryKLineData(String stockSymbol, int scale, int ma, String startTime, String endTime) {
         stockSymbol = getSinaStockSymbol(stockSymbol);
 
         String maStr = "";
@@ -41,8 +41,8 @@ public class SinaDataService implements StockDataService {
         }
 
         int dataLen = 0;
-        int startYear = DateUtils.getYear(startTimeMills);
-        int endYear = DateUtils.getYear(endTimeMills);
+        int startYear = DateUtils.getYear(startTime);
+        int endYear = DateUtils.getYear(endTime);
         for (int i = startYear; i <= endYear; i ++) {
             if (scale == 240) {// 日线
                 dataLen += 260;//一年最多有260个交易日
@@ -82,8 +82,6 @@ public class SinaDataService implements StockDataService {
     }
 
     public static void main(String[] args) {
-        SinaDataService dataService = new SinaDataService();
-        List<KLineData> list = dataService.queryKLineData("000300.SH", 240, -1, System.currentTimeMillis(), System.currentTimeMillis());
-        System.out.println(list.size());
+
     }
 }

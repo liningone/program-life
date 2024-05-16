@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class KLineDataUtils {
-    public static List<KLineData> filter(List<KLineData> list, long startTimeMills, long endTimeMills) {
-        int startIdx = search(list, startTimeMills);
-        int endIdx = search(list, endTimeMills);
+    public static List<KLineData> filter(List<KLineData> list, String startTime, String endTime) {
+        int startIdx = search(list, startTime);
+        int endIdx = search(list, endTime);
 
         List<KLineData> res = new ArrayList();
         for (int i = startIdx; i <= endIdx; i ++) {
@@ -17,10 +17,10 @@ public class KLineDataUtils {
         return res;
     }
 
-    private static int search(List<KLineData> list, long timeMills) {
-        String dateStr = DateUtils.parseDateStr(timeMills);
-        dateStr = dateStr.substring(0, list.get(0).getTime().length());
-        //2023-02-02 00:00:00 -> 2023-02-02
+    private static int search(List<KLineData> list, String dateStr) {
+        //String dateStr = DateUtils.parseDateStr(time);
+        dateStr = dateStr.substring(0, list.get(0).getTime().length()); //2023-02-02 00:00:00 -> 2023-02-02
+
 
         KLineData data = null;
         int left = 0;

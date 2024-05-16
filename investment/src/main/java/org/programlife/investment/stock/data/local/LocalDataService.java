@@ -17,10 +17,10 @@ import java.util.*;
 public class LocalDataService implements StockDataService {
 
     @Override
-    public List<KLineData> queryKLineData(String stockSymbol, int scale, int ma, long startTimeMills, long endTimeMills) {
+    public List<KLineData> queryKLineData(String stockSymbol, int scale, int ma, String startTime, String endTime) {
         List<String> dataFiles = new ArrayList<>();
-        int startYear = DateUtils.getYear(startTimeMills);
-        int endYear = DateUtils.getYear(endTimeMills);
+        int startYear = DateUtils.getYear(startTime);
+        int endYear = DateUtils.getYear(endTime);
         for (int i = startYear; i <= endYear; i ++) {
             //stock.399300.SZ.2024.daily.price.json
             String fileName = String.format("stock/%s/%s_daily_price.json", stockSymbol, i);
@@ -39,11 +39,10 @@ public class LocalDataService implements StockDataService {
         }
 
         //过滤数据
-        result = KLineDataUtils.filter(result, startTimeMills, endTimeMills);
+        result = KLineDataUtils.filter(result, startTime, endTime);
 
         return result;
     }
-
 
     private String getFileContent(String fileName) {
         String content = null;
