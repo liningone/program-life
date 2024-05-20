@@ -124,15 +124,3 @@ public class InvestmentCalculatorV1 implements InvestmentCalculator{
     }
 
 }
-
-/*
-class Summary extends IncomeData {
-
-}
-
-class IncomeStatement {
-    public Summary summary;
-    public List<IncomeData> history;
-}
- */
-

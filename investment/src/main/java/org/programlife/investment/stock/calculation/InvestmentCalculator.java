@@ -8,8 +8,7 @@ package org.programlife.investment.stock.calculation;
         股票最新信息
         操作列表
     输出：
-        收益总览
-        收益历史
+        收益
 
  */
 public interface InvestmentCalculator {

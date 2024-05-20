@@ -3,13 +3,17 @@ package org.programlife.investment.stock.util;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.*;
 import java.util.Calendar;
 import java.util.Date;
 
 public class DateUtils {
+    public static String DEFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    public static String DEFAULT_SIMPLE_DATE_FORMAT = "yyyy-MM-dd";
+
     public static long parseMills(String date) {
         if (date.length() == 10){
-            date = date + " 00:00:00";
+            date = completeTime(date);
         }
         Timestamp ts = Timestamp.valueOf(date);
         return ts.getTime();
@@ -29,11 +33,35 @@ public class DateUtils {
         return c.get(Calendar.YEAR);
     }
 
+    public static int getMonth(String dateStr) {
+        Date date = parseDate(dateStr);
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        return c.get(Calendar.MONTH);
+    }
+
+    public static int getDayOfMonth(String dateStr) {
+        if (dateStr.length() == 10){
+            dateStr = completeTime(dateStr);
+        }
+        Date date = parseDate(dateStr);
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        return c.get(Calendar.DAY_OF_MONTH);
+    }
+
     public static String parseDateStr(long timeMills) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
         Date date = new Date(timeMills);
         return simpleDateFormat.format(date);
     }
+
+    public static String parseDateStr(long timeMills, String format) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+        Date date = new Date(timeMills);
+        return simpleDateFormat.format(date);
+    }
+
 
     public static String parseDateStr(Date date) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -64,6 +92,31 @@ public class DateUtils {
         return null;
     }
 
+    public static int getDayOfWeek(String dateStr) {
+        if (dateStr.length() == 10){
+            dateStr = completeTime(dateStr);
+        }
+        Date date = parseDate(dateStr);
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        int res = c.get(Calendar.DAY_OF_WEEK);
+
+        //把星期一作为第一天，星期天为最后一天
+        res --;
+        if (res == 0) {
+            res = 7;
+        }
+        return res;
+    }
+
+    public static long plusMonths(long originMills, int monthNum) {
+        Instant instant = Instant.ofEpochMilli(originMills);
+        // 将Instant对象转换为LocalDate对象
+        LocalDate localDate = instant.atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate nextMonthDate = localDate.plusMonths(monthNum);
+        return nextMonthDate.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli();
+    }
+
     public static void main(String[] args) {
         System.out.println("2024-01-02".compareTo("2024-01-02"));
         System.out.println("2024-01-02".compareTo("2024-01-02 00:00:00"));
@@ -73,6 +126,5 @@ public class DateUtils {
 
         System.out.println("2024-01-02 00:00:00".compareTo("2024-01-02"));
         System.out.println("2024-02-02 00:00:00".compareTo("2024-02-03"));
-
     }
 }

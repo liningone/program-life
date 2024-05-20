@@ -5,6 +5,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.programlife.investment.stock.data.KLineDataUtils;
 import org.programlife.investment.stock.util.DateUtils;
 import org.programlife.investment.stock.data.KLineData;
 import org.programlife.investment.stock.data.StockDataService;
@@ -47,7 +48,8 @@ public class SinaDataService implements StockDataService {
             if (scale == 240) {// 日线
                 dataLen += 260;//一年最多有260个交易日
             }
-            //TODO
+            //TODO 更精确的计算dataLen
+
         }
 
         String url = String.format("%s?symbol=%s&scale=%s&ma=%s&datalen=%s",
@@ -81,7 +83,15 @@ public class SinaDataService implements StockDataService {
         return symbol;
     }
 
-    public static void main(String[] args) {
-
+    @Override
+    public List<KLineData> queryKLineData(String stockSymbol, int scale, int ma, List<String> specifiedTimes) {
+        String startTime = specifiedTimes.get(0);
+        String endTime = specifiedTimes.get(specifiedTimes.size() - 1);
+        List<KLineData> res = queryKLineData(stockSymbol, scale, ma, startTime, endTime);
+        res = KLineDataUtils.filter(res, specifiedTimes);
+        if (res.size() != specifiedTimes.size()) {
+            throw new RuntimeException("queryKLineData error");
+        }
+        return res;
     }
 }

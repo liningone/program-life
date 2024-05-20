@@ -14,9 +14,8 @@ public interface StockDataService {
      */
     List<KLineData> queryKLineData(String stockSymbol, int scale, int ma, String startTime, String endTime);
 
-    //TODO
     /*
     查询指定时间的股票数据
      */
-    //List<KLineData> queryKLineData(String stockSymbol, int scale, int ma, List<String> specifiedTimes);
+    List<KLineData> queryKLineData(String stockSymbol, int scale, int ma, List<String> specifiedTimes);
 }

@@ -75,6 +75,7 @@ public class LocalDataService implements StockDataService {
          */
     }
 
+    @Override
     public List<KLineData> queryKLineData(String stockSymbol, int scale, int ma, List<String> specifiedTimes) {
         String startTime = specifiedTimes.get(0);
         String endTime = specifiedTimes.get(specifiedTimes.size() - 1);
