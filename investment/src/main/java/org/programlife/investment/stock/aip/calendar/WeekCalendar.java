@@ -1,16 +1,12 @@
-package org.programlife.investment.stock.aip.v1;
+package org.programlife.investment.stock.aip.calendar;
 
 import org.programlife.investment.stock.util.DateUtils;
 
 import java.time.DayOfWeek;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /*
 计算一段时间范围内每一周的星期x的日期

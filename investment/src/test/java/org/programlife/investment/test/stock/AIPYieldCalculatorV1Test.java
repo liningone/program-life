@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.programlife.investment.stock.aip.v1.AIPOptionsV1;
 import org.programlife.investment.stock.aip.v1.AIPYieldCalculatorV1;
 import org.programlife.investment.stock.aip.v1.AIPYieldStatementV1;
-import org.programlife.investment.stock.aip.v1.InvestmentPeriodicity;
+import org.programlife.investment.stock.aip.InvestmentPeriodicity;
 import org.programlife.investment.stock.calculation.YieldData;
 import org.programlife.investment.stock.util.DateUtils;
 

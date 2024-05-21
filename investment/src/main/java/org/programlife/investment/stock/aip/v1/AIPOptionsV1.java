@@ -1,6 +1,7 @@
 package org.programlife.investment.stock.aip.v1;
 
 import org.programlife.investment.stock.aip.AIPOptions;
+import org.programlife.investment.stock.aip.InvestmentPeriodicity;
 
 /*
 支持参数：

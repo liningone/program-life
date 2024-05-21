@@ -2,10 +2,10 @@ package org.programlife.investment.test.stock;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.programlife.investment.stock.aip.v1.AIPCalendar;
-import org.programlife.investment.stock.aip.v1.DayCalendar;
-import org.programlife.investment.stock.aip.v1.MonthCalendar;
-import org.programlife.investment.stock.aip.v1.WeekCalendar;
+import org.programlife.investment.stock.aip.calendar.AIPCalendar;
+import org.programlife.investment.stock.aip.calendar.DayCalendar;
+import org.programlife.investment.stock.aip.calendar.MonthCalendar;
+import org.programlife.investment.stock.aip.calendar.WeekCalendar;
 
 import java.util.List;
 
