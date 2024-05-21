@@ -2,7 +2,13 @@ package org.programlife.investment.stock.aip.v1;
 
 import org.programlife.investment.stock.util.DateUtils;
 
+import java.time.DayOfWeek;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -17,15 +23,65 @@ public class WeekCalendar implements AIPCalendar {
     private Integer expectDayOfWeek = null;
 
     public WeekCalendar(int expectDayOfWeek) {
-        this.expectDayOfWeek = expectDayOfWeek;
+        this.setExpectDayOfWeek(expectDayOfWeek);
     }
 
     public void setExpectDayOfWeek(int expectDayOfWeek) {
+        checkDayOfWeek(expectDayOfWeek);
         this.expectDayOfWeek = expectDayOfWeek;
     }
 
     @Override
-    public List<String> generate(String startTime, String endTime) {
+    public List<String> getExpectDayTime(String startTime, String endTime) {
+        List<String> res = new ArrayList<>();
+
+        LocalDate startDate = DateUtils.parseLocalDate(startTime);
+        LocalDate endDate = DateUtils.parseLocalDate(endTime);
+
+        DayOfWeek dayOfWeek = convert(this.expectDayOfWeek);
+        LocalDate currentDate = startDate.with(TemporalAdjusters.nextOrSame(dayOfWeek));
+        while ((currentDate.isAfter(startDate) || currentDate.equals(startDate)) &&
+                (currentDate.isBefore(endDate) || currentDate.equals(endDate))) {
+            res.add(DateUtils.parseDateStr(currentDate, DateUtils.DEFAULT_SIMPLE_DATE_FORMAT));
+
+            // 下一个星期
+            currentDate = currentDate.with(TemporalAdjusters.next(dayOfWeek));
+        }
+
+        return res;
+    }
+
+    private DayOfWeek convert(int expectDayOfWeek) {
+        switch (expectDayOfWeek) {
+            case 1 : {
+                return DayOfWeek.MONDAY;
+            }
+            case 2 : {
+                return DayOfWeek.TUESDAY;
+            }
+            case 3 : {
+                return DayOfWeek.WEDNESDAY;
+            }
+            case 4 : {
+                return DayOfWeek.THURSDAY;
+            }
+            case 5 : {
+                return DayOfWeek.FRIDAY;
+            }
+            case 6 : {
+                return DayOfWeek.SATURDAY;
+            }
+            case 7 : {
+                return DayOfWeek.SUNDAY;
+            }
+        }
+
+        throw new RuntimeException("DayOfWeek error");
+    }
+
+    /*
+    @Override
+    public List<String> getExpectDayTime(String startTime, String endTime) {
         long mills = DateUtils.parseMills(startTime);
         int dayOfWeek = DateUtils.getDayOfWeek(startTime);
 
@@ -49,5 +105,14 @@ public class WeekCalendar implements AIPCalendar {
         }
 
         return res;
+    }
+    */
+
+    private void checkDayOfWeek(int expectDayOfWeek) {
+        if (expectDayOfWeek >= 1 && expectDayOfWeek <= 7) {
+            return;
+        }
+
+        throw new RuntimeException("dayOfWeek range is 1-7");
     }
 }

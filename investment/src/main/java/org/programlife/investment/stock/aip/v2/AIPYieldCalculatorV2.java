@@ -1,58 +1,76 @@
-package org.programlife.investment.stock.aip.v1;
+package org.programlife.investment.stock.aip.v2;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.programlife.investment.stock.aip.AIPIncomeCalculator;
-import org.programlife.investment.stock.aip.AIPIncomeStatement;
+import org.programlife.investment.stock.aip.AIPYieldCalculator;
+import org.programlife.investment.stock.aip.AIPYieldStatement;
 import org.programlife.investment.stock.aip.AIPOptions;
+import org.programlife.investment.stock.aip.v1.*;
+import org.programlife.investment.stock.calculation.YieldData;
+import org.programlife.investment.stock.calculation.InvestmentCalculatorV1;
+import org.programlife.investment.stock.calculation.Operation;
 import org.programlife.investment.stock.data.KLineData;
 import org.programlife.investment.stock.data.KLineDataUtils;
 import org.programlife.investment.stock.data.StockDataService;
 import org.programlife.investment.stock.data.local.LocalDataService;
 import org.programlife.investment.stock.util.DateUtils;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-
 
 /*
-
-依赖：
-    股票数据
-
-生成定投操作列表
-    计算下一次交易时间
-        天
-            last day + 1
-            如果非交易日+1
-        周
-            每个周的第一个天[yyyy年-m月-d日，]
-                [目标星期day， 下一个交易日（可能会跨周）]
-        月
-            每个月的第一天[yyyy年-n月-1日， ]
-
-        非交易日则顺延到下一个交易日买入
+v2版本改动：
+支持更详细的定投结果
  */
-public class AIPIncomeCalculatorV1 implements AIPIncomeCalculator {
+public class AIPYieldCalculatorV2 implements AIPYieldCalculator {
     private StockDataService dataService;
 
     private List<KLineData> stockDatas;
 
     @Override
-    public AIPIncomeStatement calculate(AIPOptions options) {
-        this.dataService = new LocalDataService();
+    public AIPYieldStatement calculate(AIPOptions options) {
+        //TODO dataService初始化不应该在这里
+        if (this.dataService == null) {
+            this.dataService = new LocalDataService();
+        }
+
         AIPOptionsV1 optionsV1 = (AIPOptionsV1) options;
         String startTime = optionsV1.getStartTime();
         String endTime = optionsV1.getEndTime();
         this.stockDatas = dataService.queryKLineData("000300.SH", 240, 0, startTime, endTime);
 
-        AIPCalendar calendar = new WeekCalendar(4);
-        List<String> dates = calendar.generate(startTime, endTime);
+        List<Operation> operations = new ArrayList<>();
+        List<String> dates = this.getExpectDayTime(startTime, endTime,
+                optionsV1.getPeriodicity(), optionsV1.getPeriodicityParameter());
         for (String date : dates) {
-            System.out.println(getRecentTradingDay(date));
+            date = getRecentTradingDay(date);
+            KLineData kLineData = KLineDataUtils.search(this.stockDatas, date);
+            Operation operation = new Operation();
+            operation.date = getRecentTradingDay(date);
+            operation.principal = optionsV1.getSingleAmount();
+            operation.price = kLineData.getClose();
         }
 
-        return null;
+        InvestmentCalculatorV1 calculator = new InvestmentCalculatorV1();
+        List<YieldData> yieldData = calculator.calculateEachInvestment(operations);
+
+        AIPYieldStatementV1 res = new AIPYieldStatementV1();
+
+        return res;
+    }
+
+    private List<String> getExpectDayTime(String startTime, String endTime,
+                                          InvestmentPeriodicity periodicity, Integer periodicityParameter) {
+        AIPCalendar calendar = null;
+        if (periodicity == InvestmentPeriodicity.MONTHLY) {
+            calendar = new MonthCalendar(periodicityParameter);
+        } else if (periodicity == InvestmentPeriodicity.WEEKLY) {
+            calendar = new WeekCalendar(periodicityParameter);
+        } else {
+            calendar = new DayCalendar();
+        }
+
+        return calendar.getExpectDayTime(startTime, endTime);
     }
 
     /*
@@ -64,7 +82,8 @@ public class AIPIncomeCalculatorV1 implements AIPIncomeCalculator {
     }
 
     /*
-    如果当天是非交易日，顺延到下个交易日
+    如果目标日期是交易日，直接返回
+    如果目标日期是非交易日，顺延到下个交易日
     例如 2024-05-02 -> 2024-05-06
      */
     private String getRecentTradingDay(String date) {
@@ -101,7 +120,7 @@ public class AIPIncomeCalculatorV1 implements AIPIncomeCalculator {
         this.stockDatas = dataService.queryKLineData("000300.SH", 240, 0, startTime, endTime);
 
         AIPCalendar calendar = new WeekCalendar(4);
-        List<String> dates = calendar.generate(startTime, endTime);
+        List<String> dates = calendar.getExpectDayTime(startTime, endTime);
         for (String date : dates) {
             System.out.println(getRecentTradingDay(date));
         }

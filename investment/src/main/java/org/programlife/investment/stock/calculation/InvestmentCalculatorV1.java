@@ -1,14 +1,8 @@
 package org.programlife.investment.stock.calculation;
 
-import com.google.gson.Gson;
-import org.junit.Test;
 import org.programlife.investment.stock.data.KLineData;
-import org.programlife.investment.stock.data.local.LocalDataService;
-import org.programlife.investment.stock.util.DateUtils;
-import org.programlife.investment.stock.util.MathUtils;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /*
@@ -38,7 +32,7 @@ import java.util.List;
 public class InvestmentCalculatorV1 implements InvestmentCalculator{
 
     //计算当前价格的收益情况
-    public IncomeData calculate1(KLineData stockPrice, List<Operation> operations) {
+    public YieldData calculate1(KLineData stockPrice, List<Operation> operations) {
         double quota = 0;
         double cost = 0;
 
@@ -47,7 +41,7 @@ public class InvestmentCalculatorV1 implements InvestmentCalculator{
             quota += operation.principal / operation.price;
         }
 
-        IncomeData result = new IncomeData();
+        YieldData result = new YieldData();
         result.date = stockPrice.getTime();
         result.holdingAmount = stockPrice.getClose() * quota;
         result.totalCost = cost;
@@ -58,16 +52,16 @@ public class InvestmentCalculatorV1 implements InvestmentCalculator{
     }
 
     //计算每个操作时间的收益情况
-    public List<IncomeData> calculate2(List<Operation> operations) {
+    public List<YieldData> calculateEachInvestment(List<Operation> operations) {
         double quota = 0;
         double cost = 0;
 
-        List<IncomeData> history = new ArrayList<>();
+        List<YieldData> history = new ArrayList<>();
         for (Operation operation : operations) {
             cost += operation.principal;
             quota += operation.principal / operation.price;
 
-            IncomeData income = new IncomeData();
+            YieldData income = new YieldData();
             income.date = operation.date;
             income.quota = quota;
             income.holdingAmount = income.quota * operation.price;
@@ -85,11 +79,11 @@ public class InvestmentCalculatorV1 implements InvestmentCalculator{
     从第一个操作开始计算收益历史
     交易历史不包含非交易日
      */
-    public List<IncomeData> calculate3(List<KLineData> stockPrices, List<Operation> operations) {
+    public List<YieldData> calculateDaily(List<KLineData> stockPrices, List<Operation> operations) {
         double quota = 0;
         double cost = 0;
 
-        List<IncomeData> history = new ArrayList<>();
+        List<YieldData> history = new ArrayList<>();
 
         int idx = 0;
         for(KLineData data : stockPrices) {
@@ -107,7 +101,7 @@ public class InvestmentCalculatorV1 implements InvestmentCalculator{
                 continue;
             }
 
-            IncomeData income = new IncomeData();
+            YieldData income = new YieldData();
             income.date = data.getTime();
             income.quota = quota;
 

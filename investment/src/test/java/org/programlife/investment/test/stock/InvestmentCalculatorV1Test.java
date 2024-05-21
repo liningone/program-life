@@ -3,7 +3,7 @@ package org.programlife.investment.test.stock;
 import com.google.gson.Gson;
 import org.junit.Assert;
 import org.junit.Test;
-import org.programlife.investment.stock.calculation.IncomeData;
+import org.programlife.investment.stock.calculation.YieldData;
 import org.programlife.investment.stock.calculation.InvestmentCalculatorV1;
 import org.programlife.investment.stock.calculation.Operation;
 import org.programlife.investment.stock.data.KLineData;
@@ -63,7 +63,7 @@ public class InvestmentCalculatorV1Test {
         times.add(DateUtils.completeTime("2024-05-10"));
         datas = dataService.queryKLineData("000300.SH", 240, 0, times);
 
-        IncomeData summary = calculatorV1.calculate1(datas.get(0), operationList);
+        YieldData summary = calculatorV1.calculate1(datas.get(0), operationList);
         //System.out.println(new Gson().toJson(summary));
         Assert.assertEquals("2024-05-10", summary.date);
         Assert.assertEquals(12000d, summary.totalCost, 0d);
@@ -103,11 +103,11 @@ public class InvestmentCalculatorV1Test {
             operationList.add(operation);
         }
 
-        List<IncomeData> incomeDataList = calculatorV1.calculate2(operationList);
-        Collections.reverse(incomeDataList);
+        List<YieldData> yieldDataList = calculatorV1.calculateEachInvestment(operationList);
+        Collections.reverse(yieldDataList);
 
-        Assert.assertEquals(operationList.size(), incomeDataList.size());
-        IncomeData data = incomeDataList.get(0);
+        Assert.assertEquals(operationList.size(), yieldDataList.size());
+        YieldData data = yieldDataList.get(0);
         Assert.assertEquals("2024-04-12", data.date);
         Assert.assertEquals(12000d, data.totalCost, 0d);
         Assert.assertEquals(11485, data.holdingAmount, 1d);
@@ -152,18 +152,18 @@ public class InvestmentCalculatorV1Test {
             operationList.add(operation);
         }
 
-        List<IncomeData> incomeDataList = calculatorV1.calculate3(datas, operationList);
-        Collections.reverse(incomeDataList);
-        Assert.assertEquals(241, incomeDataList.size());
+        List<YieldData> yieldDataList = calculatorV1.calculateDaily(datas, operationList);
+        Collections.reverse(yieldDataList);
+        Assert.assertEquals(241, yieldDataList.size());
 
         //亏最多钱
-        IncomeData mostMinProfit = incomeDataList.get(0);
+        YieldData mostMinProfit = yieldDataList.get(0);
         //最大亏损率
-        IncomeData mostMinYield = incomeDataList.get(0);
+        YieldData mostMinYield = yieldDataList.get(0);
         //盈利最多
-        IncomeData mostMaxProfit = incomeDataList.get(0);
+        YieldData mostMaxProfit = yieldDataList.get(0);
 
-        for (IncomeData data : incomeDataList) {
+        for (YieldData data : yieldDataList) {
             if (data.holdingProfit > mostMaxProfit.holdingProfit) {
                 mostMaxProfit = data;
             }

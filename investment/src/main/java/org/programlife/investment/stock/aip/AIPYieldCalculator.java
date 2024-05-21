@@ -9,9 +9,9 @@ AIP : 定投，全称为Automatic Investment Plan
 依赖：股票历史价格
 其他因素：人为干预定投 (v1不支持)
  */
-public interface AIPIncomeCalculator {
+public interface AIPYieldCalculator {
 
-    public AIPIncomeStatement calculate(AIPOptions options);
+    public AIPYieldStatement calculate(AIPOptions options);
 
     //void beforeEachPurchase();
 

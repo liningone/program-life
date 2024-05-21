@@ -2,6 +2,7 @@ package org.programlife.investment.stock.aip.v1;
 
 import org.programlife.investment.stock.util.DateUtils;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -19,27 +20,25 @@ public class MonthCalendar implements AIPCalendar {
     }
 
     @Override
-    public List<String> generate(String startTime, String endTime) {
-        long mills = DateUtils.parseMills(startTime);
-        int dayOfMonth = DateUtils.getDayOfMonth(startTime);
+    public List<String> getExpectDayTime(String startTime, String endTime) {
+        List<String> res = new ArrayList<>();
 
-        //定位到起始时间这月的第一日
-        mills -= TimeUnit.DAYS.toMillis(dayOfMonth - 1);
+        LocalDate startDate = DateUtils.parseLocalDate(startTime);
+        LocalDate endDate = DateUtils.parseLocalDate(endTime);
 
-        //本月不能购买，跳到下一月
-        if (dayOfMonth > expectDayOfMonth) {
-            mills = DateUtils.plusMonths(mills, 1);
+        LocalDate currentDate = startDate;
+        currentDate = currentDate.withDayOfMonth(expectDayOfMonth);
+        if (currentDate.isBefore(startDate)) {
+            currentDate = currentDate.plusMonths(1);
         }
 
-        //定位到目标日
-        mills += TimeUnit.DAYS.toMillis(expectDayOfMonth - 1);
+        while ((currentDate.isAfter(startDate) || currentDate.equals(startDate)) &&
+                (currentDate.isBefore(endDate) || currentDate.equals(endDate))) {
+            // 输出每个月的第二天日期
+            res.add(DateUtils.parseDateStr(currentDate, DateUtils.DEFAULT_SIMPLE_DATE_FORMAT));
 
-        List<String> res = new ArrayList<>();
-        long endMills = DateUtils.parseMills(endTime);
-        while (mills < endMills) {
-            String date = DateUtils.parseDateStr(mills, DateUtils.DEFAULT_SIMPLE_DATE_FORMAT);
-            res.add(date);
-            mills = DateUtils.plusMonths(mills, 1);
+            // 下一个月
+            currentDate = currentDate.plusMonths(1);
         }
 
         return res;

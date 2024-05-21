@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -50,9 +51,22 @@ public class DateUtils {
         return c.get(Calendar.DAY_OF_MONTH);
     }
 
+    /*
+    输入：时间撮
+    输出：时间字符串（默认格式）
+     */
     public static String parseDateStr(long timeMills) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
         Date date = new Date(timeMills);
+        return simpleDateFormat.format(date);
+    }
+
+    /*
+    输入：Date对象
+    输出：时间字符串（默认格式）
+    */
+    public static String parseDateStr(Date date) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return simpleDateFormat.format(date);
     }
 
@@ -62,10 +76,18 @@ public class DateUtils {
         return simpleDateFormat.format(date);
     }
 
+    public static String parseDateStr(LocalDate date, String format) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
+        String dateString = date.format(formatter);
+        return dateString;
+    }
 
-    public static String parseDateStr(Date date) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return simpleDateFormat.format(date);
+    public static String parseDateStr(String originalDateStr, String targetFormat) {
+        DateTimeFormatter originalFormatter = DateTimeFormatter.ofPattern(DEFAULT_DATE_FORMAT);
+        DateTimeFormatter targetFormatter = DateTimeFormatter.ofPattern(targetFormat);
+        LocalDateTime originalDateTime = LocalDateTime.parse(originalDateStr, originalFormatter);
+        String targetDateTimeString = originalDateTime.format(targetFormatter);
+        return targetDateTimeString;
     }
 
     public static Date parseDate(String dateStr) {
@@ -79,6 +101,15 @@ public class DateUtils {
         }
         return date;
     }
+
+    public static LocalDate parseLocalDate(String dateStr) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DEFAULT_SIMPLE_DATE_FORMAT);
+
+        // 解析时间字符串为LocalDate对象
+        LocalDate date = LocalDate.parse(dateStr, formatter);
+        return date;
+    }
+
 
     public static String getCurrentTime() {
         return parseDateStr(new Date());

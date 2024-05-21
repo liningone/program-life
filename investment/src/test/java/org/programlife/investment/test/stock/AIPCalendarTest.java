@@ -14,7 +14,7 @@ public class AIPCalendarTest {
     @Test
     public void testWeekCalendar() {
         AIPCalendar calendar = new WeekCalendar(2);
-        List<String> dates = calendar.generate("2024-05-01", "2024-05-30");
+        List<String> dates = calendar.getExpectDayTime("2024-05-01", "2024-05-30");
         Assert.assertEquals(4, dates.size());
         Assert.assertEquals("2024-05-07", dates.get(0));
         Assert.assertEquals("2024-05-14", dates.get(1));
@@ -22,22 +22,23 @@ public class AIPCalendarTest {
         Assert.assertEquals("2024-05-28", dates.get(3));
 
         ((WeekCalendar) calendar).setExpectDayOfWeek(4);
-        dates = calendar.generate("2024-05-01", "2024-05-30");
-        Assert.assertEquals(4, dates.size());
+        dates = calendar.getExpectDayTime("2024-05-01", "2024-05-30");
+        Assert.assertEquals(5, dates.size());
         Assert.assertEquals("2024-05-02", dates.get(0));
         Assert.assertEquals("2024-05-09", dates.get(1));
         Assert.assertEquals("2024-05-16", dates.get(2));
         Assert.assertEquals("2024-05-23", dates.get(3));
+        Assert.assertEquals("2024-05-30", dates.get(4));
 
         ((WeekCalendar) calendar).setExpectDayOfWeek(4);
-        dates = calendar.generate("2024-04-10", "2024-05-10");
+        dates = calendar.getExpectDayTime("2024-04-10", "2024-05-10");
         Assert.assertEquals(5, dates.size());
     }
 
     @Test
     public void testMonthCalendar() {
         AIPCalendar calendar = new MonthCalendar(12);
-        List<String> dates = calendar.generate("2023-05-01", "2024-05-30");
+        List<String> dates = calendar.getExpectDayTime("2023-05-01", "2024-05-30");
         Assert.assertEquals(13, dates.size());
 
         int i = 0;
@@ -56,7 +57,7 @@ public class AIPCalendarTest {
         Assert.assertEquals("2024-05-12", dates.get(i ++));
 
         ((MonthCalendar) calendar).setExpectDayOfMonth(4);
-        dates = calendar.generate("2023-05-05", "2023-08-30");
+        dates = calendar.getExpectDayTime("2023-05-05", "2023-08-30");
         Assert.assertEquals(3, dates.size());
         i = 0;
         Assert.assertEquals("2023-06-04", dates.get(i ++));
@@ -67,7 +68,7 @@ public class AIPCalendarTest {
     @Test
     public void testDayCalendar() {
         AIPCalendar calendar = new DayCalendar();
-        List<String> dates = calendar.generate("2023-05-01", "2024-05-30");
+        List<String> dates = calendar.getExpectDayTime("2023-05-01", "2024-05-30");
         Assert.assertEquals(395, dates.size());
 
         Assert.assertEquals("2023-05-01", dates.get(0));

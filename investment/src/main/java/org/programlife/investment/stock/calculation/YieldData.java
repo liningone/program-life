@@ -1,6 +1,6 @@
 package org.programlife.investment.stock.calculation;
 
-public class IncomeData {
+public class YieldData {
     public String date;
     public double totalCost; //本金
     public double holdingAmount; //持有金额

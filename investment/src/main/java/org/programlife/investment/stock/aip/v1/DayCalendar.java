@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 public class DayCalendar implements AIPCalendar {
 
     @Override
-    public List<String> generate(String startTime, String endTime) {
+    public List<String> getExpectDayTime(String startTime, String endTime) {
         long mills = DateUtils.parseMills(startTime);
 
         List<String> res = new ArrayList<>();

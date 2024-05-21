@@ -1,4 +1,4 @@
 package org.programlife.investment.stock.aip;
 
-public interface AIPIncomeStatement {
+public interface AIPYieldStatement {
 }
