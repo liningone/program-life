@@ -20,7 +20,6 @@ public class AIPOptionsV1 implements AIPOptions {
 
     private String endTime;
 
-    //定投金额
     private float singleAmount;
 
     /*

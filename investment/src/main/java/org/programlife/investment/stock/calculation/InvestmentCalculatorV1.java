@@ -21,18 +21,17 @@ import java.util.List;
             最大盈利率
 
     TODO
-        支持卖出操作
         支持年化收益率(IRR算法)
         最大亏损/亏损率
             遍历收益历史
         最大盈利/盈利率
             遍历收益历史
-
+        支持卖出操作
  */
 public class InvestmentCalculatorV1 implements InvestmentCalculator{
 
     //计算当前价格的收益情况
-    public YieldData calculate1(KLineData stockPrice, List<Operation> operations) {
+    public YieldData calculate(KLineData stockPrice, List<Operation> operations) {
         double quota = 0;
         double cost = 0;
 

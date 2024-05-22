@@ -16,7 +16,7 @@ import java.util.List;
 
 public class InvestmentCalculatorV1Test {
     @Test
-    public void test1() {
+    public void testCalculate() {
         LocalDataService dataService = new LocalDataService();
         InvestmentCalculatorV1 calculatorV1 = new InvestmentCalculatorV1();
 
@@ -63,7 +63,7 @@ public class InvestmentCalculatorV1Test {
         times.add(DateUtils.completeTime("2024-05-10"));
         datas = dataService.queryKLineData("000300.SH", 240, 0, times);
 
-        YieldData summary = calculatorV1.calculate1(datas.get(0), operationList);
+        YieldData summary = calculatorV1.calculate(datas.get(0), operationList);
         //System.out.println(new Gson().toJson(summary));
         Assert.assertEquals("2024-05-10", summary.date);
         Assert.assertEquals(12000d, summary.totalCost, 0d);
@@ -74,7 +74,7 @@ public class InvestmentCalculatorV1Test {
     }
 
     @Test
-    public void test2() {
+    public void testCalculateEachInvestment() {
         LocalDataService dataService = new LocalDataService();
         InvestmentCalculatorV1 calculatorV1 = new InvestmentCalculatorV1();
 
@@ -117,7 +117,7 @@ public class InvestmentCalculatorV1Test {
     }
 
     @Test
-    public void test3() {
+    public void testCalculateDaily() {
         LocalDataService dataService = new LocalDataService();
         InvestmentCalculatorV1 calculatorV1 = new InvestmentCalculatorV1();
 

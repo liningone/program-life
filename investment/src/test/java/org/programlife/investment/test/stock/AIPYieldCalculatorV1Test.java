@@ -7,6 +7,8 @@ import org.programlife.investment.stock.aip.v1.AIPYieldCalculatorV1;
 import org.programlife.investment.stock.aip.v1.AIPYieldStatementV1;
 import org.programlife.investment.stock.aip.InvestmentPeriodicity;
 import org.programlife.investment.stock.calculation.YieldData;
+import org.programlife.investment.stock.data.StockDataService;
+import org.programlife.investment.stock.data.local.LocalDataService;
 import org.programlife.investment.stock.util.DateUtils;
 
 import java.util.Collections;
@@ -15,7 +17,8 @@ import java.util.List;
 public class AIPYieldCalculatorV1Test {
     @Test
     public void testMonthly() {
-        AIPYieldCalculatorV1 calculatorV1 = new AIPYieldCalculatorV1();
+        StockDataService dataService = new LocalDataService();
+        AIPYieldCalculatorV1 calculatorV1 = new AIPYieldCalculatorV1(dataService);
         String startTime = DateUtils.completeTime("2023-04-30");
         String endTime = DateUtils.completeTime("2024-05-10");
 
@@ -27,6 +30,14 @@ public class AIPYieldCalculatorV1Test {
         options.setEndTime(endTime);
 
         AIPYieldStatementV1 res = (AIPYieldStatementV1) calculatorV1.calculate(options);
+
+        YieldData summary = res.currentYield;
+        Assert.assertEquals("2024-05-10", summary.date);
+        Assert.assertEquals(12000d, summary.totalCost, 0d);
+        Assert.assertEquals(12117, summary.holdingAmount, 1d);
+        Assert.assertEquals(117, summary.holdingProfit, 1d);
+        Assert.assertEquals(0.009f, summary.holdingYield, 0.001f);
+        Assert.assertEquals(3.3d, summary.quota, 0.11d);
 
         List<YieldData> yieldDataList = res.yieldForEachInvestment;
         Collections.reverse(yieldDataList);
@@ -43,7 +54,8 @@ public class AIPYieldCalculatorV1Test {
 
     @Test
     public void testWeekly() {
-        AIPYieldCalculatorV1 calculatorV1 = new AIPYieldCalculatorV1();
+        StockDataService dataService = new LocalDataService();
+        AIPYieldCalculatorV1 calculatorV1 = new AIPYieldCalculatorV1(dataService);
         String startTime = DateUtils.completeTime("2024-04-01");
         String endTime = DateUtils.completeTime("2024-05-10");
 

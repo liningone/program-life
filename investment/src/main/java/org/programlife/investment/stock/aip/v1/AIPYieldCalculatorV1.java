@@ -41,13 +41,12 @@ public class AIPYieldCalculatorV1 implements AIPYieldCalculator {
 
     private List<KLineData> stockDatas;
 
+    public AIPYieldCalculatorV1(StockDataService dataService) {
+        this.dataService = dataService;
+    }
+
     @Override
     public AIPYieldStatement calculate(AIPOptions options) {
-        //TODO dataService初始化不应该在这里
-        if (this.dataService == null) {
-            this.dataService = new LocalDataService();
-        }
-
         AIPOptionsV1 optionsV1 = (AIPOptionsV1) options;
         String startTime = optionsV1.getStartTime();
         String endTime = optionsV1.getEndTime();
@@ -70,7 +69,7 @@ public class AIPYieldCalculatorV1 implements AIPYieldCalculator {
 
         AIPYieldStatementV1 res = new AIPYieldStatementV1();
         res.yieldForEachInvestment = calculator.calculateEachInvestment(operations);
-        res.currentYield = calculator.calculate1(this.stockDatas.get(this.stockDatas.size() - 1), operations);
+        res.currentYield = calculator.calculate(this.stockDatas.get(this.stockDatas.size() - 1), operations);
         return res;
     }
 
@@ -113,8 +112,6 @@ public class AIPYieldCalculatorV1 implements AIPYieldCalculator {
         int idx = KLineDataUtils.searchNearestIndex(stockDatas, date, true);
         return stockDatas.get(idx).getTime();
     }
-
-
 
 }
 
