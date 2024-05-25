@@ -50,7 +50,7 @@ public class AIPYieldCalculatorV1 implements AIPYieldCalculator {
         AIPOptionsV1 optionsV1 = (AIPOptionsV1) options;
         String startTime = optionsV1.getStartTime();
         String endTime = optionsV1.getEndTime();
-        this.stockDatas = dataService.queryKLineData("000300.SH", 240, 0, startTime, endTime);
+        this.stockDatas = dataService.queryKLineData(optionsV1.getStockSymbol(), 240, 0, startTime, endTime);
 
         List<Operation> operations = new ArrayList<>();
         List<String> dates = this.getExpectDayTime(startTime, endTime,

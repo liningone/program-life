@@ -24,26 +24,6 @@
 ## 使用场景
 暂略
 
-## 代码包介绍
-investment.stock                        投资-股票
-investment.stock.data                   股票数据服务 （股票价格、指数点数）
-investment.stock.tradingstrategy        股票交易策略
-investment.stock.tradingsimulator       交易模拟器（历史数据）
-
-股票数据服务
-    对外接口
-        Result queryClosingPrice(String stockSymbol, long startTimeMills, long endTimeMills)
-    内部实现
-        数据来源有3个：网络数据，本地数据，数据库（v1不支持）
-        优先使用数据库，然后是本地数据，最后使用网络数据
-        网络接口查询结果可以生成本地数据和写入数据库
-        
-        网络数据使用Alpha Vantage API查询
-
-        本地数据使用json文件
-
-
-
 
 股票ID
 沪深300    399300.SZ or 000300.SS or 000300.SHH 

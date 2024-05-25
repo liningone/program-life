@@ -90,6 +90,12 @@ public class DateUtils {
         return targetDateTimeString;
     }
 
+    public static String parseDateStr(int year, int month, int day) {
+        LocalDate date = LocalDate.of(year, month, day);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DEFAULT_SIMPLE_DATE_FORMAT);
+        return date.format(formatter);
+    }
+
     public static Date parseDate(String dateStr) {
         //dateStr likes: "2020-02-13 16:01:30";
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

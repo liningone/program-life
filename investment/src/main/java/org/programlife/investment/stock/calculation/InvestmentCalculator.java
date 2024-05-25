@@ -1,6 +1,5 @@
 package org.programlife.investment.stock.calculation;
 
-
 /*
 投资计算器：计算投资收益
     需求：根据操作历史计算收益历史

@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.programlife.investment.stock.calculation.YieldData;
 import org.programlife.investment.stock.calculation.InvestmentCalculatorV1;
 import org.programlife.investment.stock.calculation.Operation;
+import org.programlife.investment.stock.calculation.YieldDataUtils;
 import org.programlife.investment.stock.data.KLineData;
 import org.programlife.investment.stock.data.local.LocalDataService;
 import org.programlife.investment.stock.util.DateUtils;
@@ -156,28 +157,16 @@ public class InvestmentCalculatorV1Test {
         Collections.reverse(yieldDataList);
         Assert.assertEquals(241, yieldDataList.size());
 
-        //亏最多钱
-        YieldData mostMinProfit = yieldDataList.get(0);
-        //最大亏损率
-        YieldData mostMinYield = yieldDataList.get(0);
-        //盈利最多
-        YieldData mostMaxProfit = yieldDataList.get(0);
+        //最小盈利
+        YieldData mostMinProfit = YieldDataUtils.findMinProfit(yieldDataList);
+        //最小盈利率
+        YieldData mostMinYield = YieldDataUtils.findMinProfitPercentage(yieldDataList);
+        //最大盈利
+        YieldData mostMaxProfit = YieldDataUtils.findMaxProfit(yieldDataList);
 
-        for (YieldData data : yieldDataList) {
-            if (data.holdingProfit > mostMaxProfit.holdingProfit) {
-                mostMaxProfit = data;
-            }
-            if(data.holdingYield < mostMinYield.holdingYield) {
-                mostMinYield = data;
-            }
-            if (data.holdingProfit < mostMinProfit.holdingProfit) {
-                mostMinProfit = data;
-            }
-        }
-
-        System.out.println("亏损最多钱：" + new Gson().toJson(mostMinProfit));
-        System.out.println("最大亏损率：" + new Gson().toJson(mostMinYield));
-        System.out.println("盈利最多钱：" + new Gson().toJson(mostMaxProfit));
+        System.out.println("最小盈利：" + new Gson().toJson(mostMinProfit));
+        System.out.println("最小盈利率：" + new Gson().toJson(mostMinYield));
+        System.out.println("最大盈利：" + new Gson().toJson(mostMaxProfit));
 
         Assert.assertEquals("2024-02-02", mostMinProfit.date);
         Assert.assertEquals(9000, mostMinProfit.totalCost, 0d);

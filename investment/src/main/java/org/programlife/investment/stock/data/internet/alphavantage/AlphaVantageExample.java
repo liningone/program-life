@@ -24,7 +24,8 @@ public class AlphaVantageExample {
         String function = "TIME_SERIES_DAILY";
         String symbol = "399300.SZ"; //沪深300
         //symbol = "000300.SHH"; //沪深300
-        symbol = "000001.SHH"; //上证
+        //symbol = "000001.SHH"; //上证
+        symbol = "^GSPC";
 
         //symbol = "002340.SZ"; //一直能成功
         String outputsize = "full";  // 'full' 或 'compact', full会返回所有历史数据，compact返回最近100条数据
