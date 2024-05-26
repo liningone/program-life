@@ -23,6 +23,7 @@ public class AIPYieldCalculatorV1Test {
         String endTime = DateUtils.completeTime("2024-05-10");
 
         AIPOptionsV1 options = new AIPOptionsV1();
+        options.setStockSymbol("000300.SH");
         options.setSingleAmount(1000);
         options.setPeriodicity(InvestmentPeriodicity.MONTHLY);
         options.setPeriodicityParameter(12);
@@ -46,7 +47,7 @@ public class AIPYieldCalculatorV1Test {
         YieldData data = yieldDataList.get(0);
         Assert.assertEquals("2024-04-12", data.date);
         Assert.assertEquals(12000d, data.totalCost, 0d);
-        Assert.assertEquals(11485, data.holdingAmount, 1d);
+        Assert.assertEquals(11486, data.holdingAmount, 1d);
         Assert.assertEquals(-514, data.holdingProfit, 1d);
         Assert.assertEquals(-0.042f, data.holdingYield, 0.001f);
         Assert.assertEquals(3.3d, data.quota, 0.11d);
@@ -60,6 +61,7 @@ public class AIPYieldCalculatorV1Test {
         String endTime = DateUtils.completeTime("2024-05-10");
 
         AIPOptionsV1 options = new AIPOptionsV1();
+        options.setStockSymbol("000300.SH");
         options.setSingleAmount(1000);
         options.setPeriodicity(InvestmentPeriodicity.WEEKLY);
         options.setPeriodicityParameter(2);

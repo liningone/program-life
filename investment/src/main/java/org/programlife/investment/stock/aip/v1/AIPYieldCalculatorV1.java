@@ -13,7 +13,6 @@ import org.programlife.investment.stock.calculation.Operation;
 import org.programlife.investment.stock.data.KLineData;
 import org.programlife.investment.stock.data.KLineDataUtils;
 import org.programlife.investment.stock.data.StockDataService;
-import org.programlife.investment.stock.data.local.LocalDataService;
 import org.programlife.investment.stock.util.DateUtils;
 
 import java.util.ArrayList;

@@ -49,7 +49,6 @@ public class SinaDataService implements StockDataService {
                 dataLen += 260;//一年最多有260个交易日
             }
             //TODO 更精确的计算dataLen
-
         }
 
         String url = String.format("%s?symbol=%s&scale=%s&ma=%s&datalen=%s",
@@ -67,7 +66,9 @@ public class SinaDataService implements StockDataService {
             throw new RuntimeException(e);
         }
 
-        return SinaOutputFormat.convertToSeries(jsonResponse);
+        List<KLineData> result = SinaOutputFormat.convertToSeries(jsonResponse);
+        result = KLineDataUtils.filter(result, startTime, endTime);
+        return result;
     }
 
     /*

@@ -15,9 +15,12 @@ Alpha Vantage
 API文档
     https://www.alphavantage.co/documentation/
 API限制
-    免费的接口查a股指数的数据，查一次后要隔几个小时后才能再次查询。
+    免费的接口查指数的历史数据，查一次后要隔几个小时后才能再次查询。
     若在时间内查询，报错信息就说查询语法错误
     似乎是根据请求IP做了限制，即使换了api_key也有时间限制
+
+    网上说Alpha vantage不支持指数，推荐使用指数相关的ETF
+    https://stackoverflow.com/questions/62475279/alpha-vantage-api-how-do-i-get-stock-market-indexes
 
 获取每天的行情
     TIME_SERIES_DAILY

@@ -1,4 +1,4 @@
-package org.programlife.investment.test.stock;
+package org.programlife.investment.test.stock.data;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -21,10 +21,10 @@ public class LocalDataServiceTest {
         Assert.assertEquals(242, res.size());
         KLineData data = res.get(0);
         Assert.assertEquals("2023-01-03", data.getTime());
-        Assert.assertEquals(3887, data.getClose());
+        Assert.assertEquals(3887.8, data.getClose(), 0.1);
         data = res.get(res.size() - 1);
         Assert.assertEquals("2023-12-29", data.getTime());
-        Assert.assertEquals(3431, data.getClose());
+        Assert.assertEquals(3431.1, data.getClose(),0.1);
 
         startTime = "2022-01-01 00:00:00";
         endTime = "2023-12-30 00:00:00";
@@ -32,7 +32,7 @@ public class LocalDataServiceTest {
         Assert.assertEquals(484, res.size());
         data = res.get(0);
         Assert.assertEquals("2022-01-04", data.getTime());
-        Assert.assertEquals(4917, data.getClose());
+        Assert.assertEquals(4917.7, data.getClose(), 0.1);
 
         startTime = "2023-02-02 00:00:00";
         endTime = "2024-02-01 00:00:00";
@@ -40,10 +40,10 @@ public class LocalDataServiceTest {
         Assert.assertEquals(248, res.size());
         data = res.get(0);
         Assert.assertEquals("2023-02-02", data.getTime());
-        Assert.assertEquals(4181, data.getClose());
+        Assert.assertEquals(4181.1, data.getClose(), 0.1);
         data = res.get(res.size() - 1);
         Assert.assertEquals("2024-02-01", data.getTime());
-        Assert.assertEquals(3217, data.getClose());
+        Assert.assertEquals(3217.7, data.getClose(), 0.1);
     }
 
     @Test
@@ -58,10 +58,10 @@ public class LocalDataServiceTest {
 
         KLineData data = res.get(0);
         Assert.assertEquals("2023-05-12", data.getTime());
-        Assert.assertEquals(3937, data.getClose());
+        Assert.assertEquals(3937.7, data.getClose(), 0.1);
 
         data = res.get(2);
         Assert.assertEquals("2023-07-14", data.getTime());
-        Assert.assertEquals(3899, data.getClose());
+        Assert.assertEquals(3899.1, data.getClose(), 0.1);
     }
 }

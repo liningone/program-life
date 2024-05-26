@@ -9,13 +9,12 @@ import java.net.URL;
 public class AlphaVantageTest {
     public static void main(String[] args) {
         // 设置AlphaVantage API密钥
-        String apiKey = "AAK3UFZ4N2ASWYG8";
+        String apiKey = "5DWSG04BZL9NL99L";
 
-        // 设置标普500指数的符号（代码）
-        String symbol = "IBM";
+        String symbol = "SPY";
 
         // 构建API请求URL
-        String apiUrl = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=" + symbol + "&apikey=" + apiKey;
+        String apiUrl = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&outputsize=compact&symbol=" + symbol + "&apikey=" + apiKey;
 
         // 发送HTTP请求并获取响应
         try {

@@ -18,8 +18,8 @@ public class DataImporter {
     private AlphaVantageDataService alphaVantageDataService = new AlphaVantageDataService();
     private SinaDataService sinaDataService = new SinaDataService();
 
-    public void alphaVantageToLocal(String stockSymbol, String type) {
-        List<KLineData> list = alphaVantageDataService.queryKLineData(stockSymbol, 240, 0, DateUtils.getCurrentTime(), DateUtils.getCurrentTime());
+    public void alphaVantageToLocal(String stockSymbol, String type, String startTime) {
+        List<KLineData> list = alphaVantageDataService.queryKLineData(stockSymbol, 240, 0, startTime, DateUtils.getCurrentTime());
         Map<String, List<KLineData>> map = new HashMap<>();
         for (KLineData data : list) {
             String year = data.getTime().substring(0, 4);
@@ -64,12 +64,11 @@ public class DataImporter {
     public static void main(String[] args) {
         DataImporter importer = new DataImporter();
 
-        //importer.alphaVantageToLocal("000001.SS", "daily_price");
+        //importer.alphaVantageToLocal("SPY", "daily_price", "2000-01-01 00:00:00");
 
-        //importer.sinaToLocal("000001.SH", "daily_price", "2010-01-01 00:00:00");
-        //importer.sinaToLocal("000300.SH", "daily_price", "2010-01-01 00:00:00");
-        //importer.sinaToLocal("399989.SZ", "daily_price", "2010-01-01 00:00:00");
-        //importer.sinaToLocal("000932.SH", "daily_price", "2010-01-01 00:00:00");
-
+        importer.sinaToLocal("000001.SH", "daily_price", "2010-01-01 00:00:00");
+        importer.sinaToLocal("000300.SH", "daily_price", "2010-01-01 00:00:00");
+        importer.sinaToLocal("399989.SZ", "daily_price", "2010-01-01 00:00:00");
+        importer.sinaToLocal("000932.SH", "daily_price", "2010-01-01 00:00:00");
     }
 }

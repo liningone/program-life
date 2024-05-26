@@ -16,14 +16,26 @@ public class AlphaVantageOutputFormat {
         List<KLineData> result = new ArrayList();
         for(String day : timeSeries.keySet()) {
             JSONObject series = timeSeries.getJSONObject(day);
-            String val = series.getString("4. close");
-            KLineData KLineDataObj = new KLineData();
-            KLineDataObj.setTime(day);;
-            KLineDataObj.setClose((int)Double.parseDouble(val));
-            result.add(KLineDataObj);
+            String openPriceStr = series.getString("1. open");
+            String highPriceStr = series.getString("2. high");
+            String lowPriceStr = series.getString("3. low");
+            String closePriceStr = series.getString("4. close");
+            String volumeStr = series.getString("5. volume");
+            KLineData dataObj = new KLineData();
+            dataObj.setTime(day);
+            dataObj.setOpen(doubleStr2Float(openPriceStr));
+            dataObj.setHigh(doubleStr2Float(highPriceStr));
+            dataObj.setLow(doubleStr2Float(lowPriceStr));
+            dataObj.setClose(doubleStr2Float(closePriceStr));
+            dataObj.setVolume(Long.parseLong(volumeStr));
+            result.add(dataObj);
         }
 
         return result;
+    }
+
+    private static float doubleStr2Float(String doubleStr) {
+        return Float.parseFloat(doubleStr);
     }
 
     public static void main(String[] args) {

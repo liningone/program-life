@@ -23,16 +23,20 @@ public class SinaOutputFormat {
     public static KLineData convert(SinaKLineDataModel data) {
         KLineData res = new KLineData();
         res.setTime(data.getDay());
-        res.setOpen(doubleStr2Int(data.getOpen()));
-        res.setLow(doubleStr2Int(data.getLow()));
-        res.setHigh(doubleStr2Int(data.getHigh()));
-        res.setClose(doubleStr2Int(data.getClose()));
+        res.setOpen(doubleStr2Float(data.getOpen()));
+        res.setLow(doubleStr2Float(data.getLow()));
+        res.setHigh(doubleStr2Float(data.getHigh()));
+        res.setClose(doubleStr2Float(data.getClose()));
         res.setVolume(Long.parseLong(data.getVolume()));
         return res;
     }
 
-    private static int doubleStr2Int(String data) {
-        return (int)Double.parseDouble(data);
+    private static int doubleStr2Int(String doubleStr) {
+        return (int)Double.parseDouble(doubleStr);
+    }
+
+    private static float doubleStr2Float(String doubleStr) {
+        return Float.parseFloat(doubleStr);
     }
 
     public static void main(String[] args) {

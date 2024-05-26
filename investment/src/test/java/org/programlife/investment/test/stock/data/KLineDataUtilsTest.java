@@ -1,4 +1,4 @@
-package org.programlife.investment.test.stock;
+package org.programlife.investment.test.stock.data;
 
 import org.junit.Assert;
 import org.junit.Test;

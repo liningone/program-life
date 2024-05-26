@@ -2,10 +2,10 @@ package org.programlife.investment.stock.data;
 
 public class KLineData {
     private String time;
-    private int open;
-    private int high;
-    private int low;
-    private int close;
+    private float open;
+    private float high;
+    private float low;
+    private float close;
     private long volume;
 
     public String getTime() {
@@ -16,35 +16,35 @@ public class KLineData {
         this.time = time;
     }
 
-    public int getOpen() {
+    public float getOpen() {
         return open;
     }
 
-    public void setOpen(int open) {
+    public void setOpen(float open) {
         this.open = open;
     }
 
-    public int getHigh() {
+    public float getHigh() {
         return high;
     }
 
-    public void setHigh(int high) {
+    public void setHigh(float high) {
         this.high = high;
     }
 
-    public int getLow() {
+    public float getLow() {
         return low;
     }
 
-    public void setLow(int low) {
+    public void setLow(float low) {
         this.low = low;
     }
 
-    public int getClose() {
+    public float getClose() {
         return close;
     }
 
-    public void setClose(int close) {
+    public void setClose(float close) {
         this.close = close;
     }
 

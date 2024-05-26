@@ -111,7 +111,7 @@ public class InvestmentCalculatorV1Test {
         YieldData data = yieldDataList.get(0);
         Assert.assertEquals("2024-04-12", data.date);
         Assert.assertEquals(12000d, data.totalCost, 0d);
-        Assert.assertEquals(11485, data.holdingAmount, 1d);
+        Assert.assertEquals(11486, data.holdingAmount, 1d);
         Assert.assertEquals(-514, data.holdingProfit, 1d);
         Assert.assertEquals(-0.042f, data.holdingYield, 0.001f);
         Assert.assertEquals(3.3d, data.quota, 0.11d);
@@ -170,7 +170,7 @@ public class InvestmentCalculatorV1Test {
 
         Assert.assertEquals("2024-02-02", mostMinProfit.date);
         Assert.assertEquals(9000, mostMinProfit.totalCost, 0d);
-        Assert.assertEquals(7774, mostMinProfit.holdingAmount, 1d);
+        Assert.assertEquals(7775, mostMinProfit.holdingAmount, 1d);
         Assert.assertEquals(-1225, mostMinProfit.holdingProfit, 1d);
         Assert.assertEquals(-0.136f, mostMinProfit.holdingYield, 0.001f);
         Assert.assertEquals(2.445d, mostMinProfit.quota, 0.001d);
