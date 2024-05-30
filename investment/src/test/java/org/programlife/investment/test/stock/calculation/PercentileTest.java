@@ -1,4 +1,4 @@
-package org.programlife.investment.test.stock;
+package org.programlife.investment.test.stock.calculation;
 
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.apache.commons.math3.stat.descriptive.rank.Percentile;

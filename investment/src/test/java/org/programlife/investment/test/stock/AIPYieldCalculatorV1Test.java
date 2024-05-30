@@ -35,10 +35,12 @@ public class AIPYieldCalculatorV1Test {
         YieldData summary = res.currentYield;
         Assert.assertEquals("2024-05-10", summary.date);
         Assert.assertEquals(12000d, summary.totalCost, 0d);
-        Assert.assertEquals(12117, summary.holdingAmount, 1d);
-        Assert.assertEquals(117, summary.holdingProfit, 1d);
-        Assert.assertEquals(0.009f, summary.holdingYield, 0.001f);
+        Assert.assertEquals(12116, summary.finalAmount, 1d);
+        Assert.assertEquals(116, summary.profit, 1d);
+        Assert.assertEquals(0.009f, summary.returnRate, 0.001f);
         Assert.assertEquals(3.3d, summary.quota, 0.11d);
+        Assert.assertEquals(0.018d, summary.annualIRR, 0.01d);
+
 
         List<YieldData> yieldDataList = res.yieldForEachInvestment;
         Collections.reverse(yieldDataList);
@@ -47,9 +49,9 @@ public class AIPYieldCalculatorV1Test {
         YieldData data = yieldDataList.get(0);
         Assert.assertEquals("2024-04-12", data.date);
         Assert.assertEquals(12000d, data.totalCost, 0d);
-        Assert.assertEquals(11486, data.holdingAmount, 1d);
-        Assert.assertEquals(-514, data.holdingProfit, 1d);
-        Assert.assertEquals(-0.042f, data.holdingYield, 0.001f);
+        Assert.assertEquals(11486, data.finalAmount, 1d);
+        Assert.assertEquals(-514, data.profit, 1d);
+        Assert.assertEquals(-0.042f, data.returnRate, 0.001f);
         Assert.assertEquals(3.3d, data.quota, 0.11d);
     }
 
@@ -77,9 +79,9 @@ public class AIPYieldCalculatorV1Test {
         YieldData data = yieldDataList.get(0);
         Assert.assertEquals("2024-05-07", data.date);
         Assert.assertEquals(6000d, data.totalCost, 0d);
-        Assert.assertEquals(6158, data.holdingAmount, 1d);
-        Assert.assertEquals(158, data.holdingProfit, 1d);
-        Assert.assertEquals(0.026f, data.holdingYield, 0.001f);
+        Assert.assertEquals(6158, data.finalAmount, 1d);
+        Assert.assertEquals(158, data.profit, 1d);
+        Assert.assertEquals(0.026f, data.returnRate, 0.001f);
         Assert.assertEquals(1.6d, data.quota, 0.11d);
     }
 

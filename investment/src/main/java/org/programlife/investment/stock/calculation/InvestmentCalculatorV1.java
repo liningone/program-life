@@ -21,7 +21,6 @@ import java.util.List;
             最大盈利率
 
     TODO
-        支持年化收益率(IRR算法)
         最大亏损/亏损率
             遍历收益历史
         最大盈利/盈利率
@@ -35,20 +34,33 @@ public class InvestmentCalculatorV1 implements InvestmentCalculator{
         double quota = 0;
         double cost = 0;
 
+        double[] cashFlows = new double[operations.size() + 1];
+        String[] dates = new String[operations.size() + 1];
+        int idx = 0;
+
         for (Operation operation : operations) {
             cost += operation.principal;
             quota += operation.principal / operation.price;
+
+            cashFlows[idx] = -operation.principal;
+            dates[idx ++] = operation.date;
         }
 
         YieldData result = new YieldData();
         result.date = stockPrice.getTime();
-        result.holdingAmount = stockPrice.getClose() * quota;
+        result.finalAmount = stockPrice.getClose() * quota;
         result.totalCost = cost;
-        result.holdingProfit = result.holdingAmount - result.totalCost;
-        result.holdingYield = (float) (result.holdingProfit / result.totalCost);
+        result.profit = result.finalAmount - result.totalCost;
+        result.returnRate = (float) (result.profit / result.totalCost);
         result.quota = quota;
+
+        cashFlows[idx] = result.finalAmount;
+        dates[idx] = stockPrice.getTime();
+        result.annualIRR = IRRCalculator.calculateAnnualIRR(cashFlows, dates);
+
         return  result;
     }
+
 
     //计算每个操作时间的收益情况
     public List<YieldData> calculateEachInvestment(List<Operation> operations) {
@@ -63,10 +75,10 @@ public class InvestmentCalculatorV1 implements InvestmentCalculator{
             YieldData income = new YieldData();
             income.date = operation.date;
             income.quota = quota;
-            income.holdingAmount = income.quota * operation.price;
+            income.finalAmount = income.quota * operation.price;
             income.totalCost = cost;
-            income.holdingProfit = income.holdingAmount - income.totalCost;
-            income.holdingYield = (float) (income.holdingProfit / income.totalCost);
+            income.profit = income.finalAmount - income.totalCost;
+            income.returnRate = (float) (income.profit / income.totalCost);
             history.add(income);
         }
 
@@ -91,7 +103,6 @@ public class InvestmentCalculatorV1 implements InvestmentCalculator{
                 if (data.getTime().equals(operation.date)) {
                     cost += operation.principal;
                     quota += operation.principal / operation.price;
-                    //double temp = MathUtils.doubleDivide(operation.principal, operation.price, 3);
                     idx ++;
                 }
             }
@@ -104,16 +115,29 @@ public class InvestmentCalculatorV1 implements InvestmentCalculator{
             income.date = data.getTime();
             income.quota = quota;
 
-            income.holdingAmount = income.quota * data.getClose();
-            //income.holdingAmount = MathUtils.formatDouble(income.holdingAmount, 2);
+            income.finalAmount = income.quota * data.getClose();
             income.totalCost = cost;
-            income.holdingProfit = income.holdingAmount - income.totalCost;
-            income.holdingYield = (float) (income.holdingProfit / income.totalCost) ;
-            //income.holdingYield = MathUtils.formatFloat(income.holdingYield, 2);
+            income.profit = income.finalAmount - income.totalCost;
+            income.returnRate = (float) (income.profit / income.totalCost) ;
             history.add(income);
         }
 
         return history;
     }
 
+    public double calculateIRR(KLineData stockPrice, List<Operation> operations) {
+        double[] cashFlows = new double[operations.size() + 1];
+        String[] dates = new String[operations.size() + 1];
+        int idx = 0;
+
+        for (Operation operation : operations) {
+            cashFlows[idx] = -operation.principal;
+            dates[idx ++] = operation.date;
+        }
+
+        //YieldData result = calculate(stockPrice, operations);
+        //cashFlows[idx] = result.holdingAmount;
+        dates[idx] = stockPrice.getTime();
+        return IRRCalculator.calculateAnnualIRR(cashFlows, dates);
+    }
 }

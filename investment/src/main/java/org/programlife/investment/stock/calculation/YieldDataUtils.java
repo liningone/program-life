@@ -8,7 +8,7 @@ public class YieldDataUtils {
     public static YieldData findMaxProfit(List<YieldData> list) {
         YieldData res = list.get(0);
         for (YieldData data : list) {
-            if (data.holdingProfit > res.holdingProfit) {
+            if (data.profit > res.profit) {
                 res = data;
             }
         }
@@ -19,7 +19,7 @@ public class YieldDataUtils {
     public static YieldData findMaxProfitPercentage(List<YieldData> list) {
         YieldData res = list.get(0);
         for (YieldData data : list) {
-            if (data.holdingYield > res.holdingYield) {
+            if (data.returnRate > res.returnRate) {
                 res = data;
             }
         }
@@ -30,7 +30,7 @@ public class YieldDataUtils {
     public static YieldData findMinProfit(List<YieldData> list) {
         YieldData res = list.get(0);
         for (YieldData data : list) {
-            if (data.holdingProfit < res.holdingProfit) {
+            if (data.profit < res.profit) {
                 res = data;
             }
         }
@@ -41,7 +41,7 @@ public class YieldDataUtils {
     public static YieldData findMinProfitPercentage(List<YieldData> list) {
         YieldData res = list.get(0);
         for (YieldData data : list) {
-            if (data.holdingYield < res.holdingYield) {
+            if (data.returnRate < res.returnRate) {
                 res = data;
             }
         }

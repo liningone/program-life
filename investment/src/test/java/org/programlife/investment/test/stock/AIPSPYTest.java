@@ -16,7 +16,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AIP000300SHTest {
+public class AIPSPYTest {
 
     @Test
     public void test() {
@@ -34,11 +34,11 @@ public class AIP000300SHTest {
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate date = LocalDate.parse(dateStr, formatter);
-            LocalDate oneYearLater = date.plusYears(1).minusDays(1);
+            LocalDate oneYearLater = date.plusYears(1);
             String endTime = DateUtils.completeTime(oneYearLater.format(formatter));
 
             AIPOptionsV1 options = new AIPOptionsV1();
-            options.setStockSymbol("000300.SH");
+            options.setStockSymbol("SPY");
             options.setSingleAmount(1000);
             options.setPeriodicity(InvestmentPeriodicity.MONTHLY);
             options.setPeriodicityParameter(1);

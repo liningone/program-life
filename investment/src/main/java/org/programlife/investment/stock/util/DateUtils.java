@@ -116,6 +116,14 @@ public class DateUtils {
         return date;
     }
 
+    public static LocalDate parseLocalDate(String dateStr, String format) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
+
+        // 解析时间字符串为LocalDate对象
+        LocalDate date = LocalDate.parse(dateStr, formatter);
+        return date;
+    }
+
 
     public static String getCurrentTime() {
         return parseDateStr(new Date());
